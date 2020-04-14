@@ -1,16 +1,15 @@
 package com.mustplay.moviejournal;
 
-import android.graphics.Bitmap;
-import android.media.Image;
-
 public class Movie {
     String title;
-    String poster;
+    String posterUrl;
+    String score;
     String description;
 
-    public Movie(String title, String poster){
+    public Movie(String title, String posterUrl, String score){
         this.title = title;
-        this.poster = poster;
+        this.posterUrl = posterUrl;
+        this.score = score;
     }
 
     public String getTitle() {
@@ -21,19 +20,19 @@ public class Movie {
         this.title = title;
     }
 
-    public String getPoster() {
-        return poster;
+    public String getPosterUrl() {
+        return posterUrl;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
-    public String getDescription() {
-        return description;
+    public String getScore() {
+        return score;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setScore(String score) {
+        this.score = score;
     }
 }

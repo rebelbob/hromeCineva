@@ -15,6 +15,7 @@ import com.mustplay.moviejournal.ui.HistoryFragment;
 import com.mustplay.moviejournal.ui.SearchFragment;
 import com.mustplay.moviejournal.ui.BookmarksFragment;
 import com.mustplay.moviejournal.ui.WatchFragment;
+import com.mustplay.moviejournal.util.DownloadMovieTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
         openFragment(SearchFragment.newInstance());
     }
 
