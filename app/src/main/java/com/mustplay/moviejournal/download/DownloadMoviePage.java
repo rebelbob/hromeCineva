@@ -2,8 +2,8 @@ package com.mustplay.moviejournal.download;
 
 import android.os.AsyncTask;
 
+import com.mustplay.moviejournal.Movie;
 import com.mustplay.moviejournal.ui.MoviePageFragment;
-import com.mustplay.moviejournal.util.MovieStorage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,14 +11,14 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class DownloadMoviePage extends AsyncTask<Integer, Void, Void> {
+public class DownloadMoviePage extends AsyncTask<Movie, Void, Void> {
 
     private static boolean isLoading = false;
 
     @Override
-    synchronized protected Void doInBackground(Integer... params) {
+    synchronized protected Void doInBackground(Movie... params) {
 
-        int curMoviePos = params[0];
+        Movie curMoviePos = params[0];
 
         isLoading = true;//не позволяет создать больше одного потока за раз
 
@@ -27,7 +27,7 @@ public class DownloadMoviePage extends AsyncTask<Integer, Void, Void> {
         Elements description;
 
         try {
-            doc = Jsoup.connect("https://www.megacritic.ru" + MovieStorage.getMovie(curMoviePos).getMoviePageUrl())
+            doc = Jsoup.connect("https://www.megacritic.ru" + curMoviePos.getMoviePageUrl())
                     .userAgent("Chrome/4.0.249.0 Safari/532.5")
                     .referrer("http://www.google.com")
                     .get();
@@ -39,8 +39,8 @@ public class DownloadMoviePage extends AsyncTask<Integer, Void, Void> {
             images = doc.select("div.jrListingMainImage").select("a");
             description = doc.select("[itemprop=description]").select("p");
 
-            MovieStorage.getMovie(curMoviePos).setPosterUrl(images.get(0).attr("href"));
-            MovieStorage.getMovie(curMoviePos).setDescription(description.get(1).text());
+            curMoviePos.setPosterUrl(images.get(0).attr("href"));
+            curMoviePos.setDescription(description.get(1).text());
         }
         return null;
     }

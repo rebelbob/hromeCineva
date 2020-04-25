@@ -55,7 +55,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         private ImageView poster;
         private TextView title;
-        private TextView description;
         private TextView score;
         private TextView genre;
         private TextView country;
@@ -73,7 +72,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 public void onClick(View v) {
                     AppCompatActivity appCompatActivity = (AppCompatActivity) itemView.getContext();
                     FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.container, new MoviePageFragment(currentMoviePos));
+                    transaction.replace(R.id.container, new MoviePageFragment(currentMoviePos, status));
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }

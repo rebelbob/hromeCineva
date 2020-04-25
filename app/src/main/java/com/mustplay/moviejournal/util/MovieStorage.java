@@ -13,6 +13,7 @@ public class MovieStorage {
 
     private MovieStorage(){
         newMovies = new ArrayList<>();
+        markMovies = new ArrayList<>();
     }
 
     public static synchronized MovieStorage getInstance(){
@@ -48,5 +49,9 @@ public class MovieStorage {
         } else {
             newMovies.add(movie);
         }
+    }
+
+    synchronized public static void addToMark(int position){
+        markMovies.add(getMovie(position, Movie.Status.NEW));
     }
 }

@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 
 import com.mustplay.moviejournal.Movie;
@@ -21,12 +19,14 @@ public class MoviePageFragment extends Fragment {
     private int curMoviePos;
     private View root;
     private ImageButton addMovieButton;
+    private Movie.Status status;
     private static MoviePageFragment fragment;
 
     MoviePageFragment() {}
 
-    public MoviePageFragment(int curMoviePos) {
+    public MoviePageFragment(int curMoviePos, Movie.Status status) {
         this.curMoviePos = curMoviePos;
+        this.status = status;
         fragment = this;
     }
 
@@ -51,12 +51,12 @@ public class MoviePageFragment extends Fragment {
         addMovieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieStorage.addMovie(MovieStorage.getMovie(curMoviePos, Movie.Status.NEW), Movie.Status.MARK);
+                MovieStorage.addToMark(curMoviePos);
             }
         });
 
         //загрузка данных в методе onDataLoad(), а метод вызывается в DownloadMoviePage()
-        new DownloadMoviePage().execute(curMoviePos);
+        new DownloadMoviePage().execute(MovieStorage.getMovie(curMoviePos, status));
         return root;
     }
 
@@ -65,8 +65,8 @@ public class MoviePageFragment extends Fragment {
         TextView description = root.findViewById(R.id.description);
         TextView title = root.findViewById(R.id.title);
 
-        Picasso.with(getContext()).load(MovieStorage.getMovie(curMoviePos).getPosterUrl()).into(poster);
-        title.setText(MovieStorage.getMovie(curMoviePos).getTitle());
-        description.setText(MovieStorage.getMovie(curMoviePos).getDescription());
+        Picasso.with(getContext()).load(MovieStorage.getMovie(curMoviePos, status).getPosterUrl()).into(poster);
+        title.setText(MovieStorage.getMovie(curMoviePos, status).getTitle());
+        description.setText(MovieStorage.getMovie(curMoviePos, status).getDescription());
     }
 }
