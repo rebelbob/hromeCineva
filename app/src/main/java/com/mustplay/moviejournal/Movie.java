@@ -10,13 +10,13 @@ public class Movie {
 
     Status status;
 
-    String title;
-    String posterUrl;
-    String score;
-    String description;
-    String genre;
-    String country;
-    String moviePageUrl;
+    private String title;
+    private String posterUrl;
+    private String score;
+    private String description;
+    private String genre;
+    private String country;
+    private String moviePageUrl;
 
 
     public Movie(Status status, String title, String posterUrl, String score, String moviePageUrl, String genre, String country){
@@ -87,5 +87,27 @@ public class Movie {
 
     public Status getStatus() {
         return status;
+    }
+
+    @Override
+    public int hashCode(){
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + title.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object object){
+        if (this == object)
+            return true;
+        if (object == null)
+            return false;
+        if (object.getClass() != this.getClass())
+            return false;
+        Movie other = (Movie) object;
+        if (!this.getTitle().equals(other.getTitle()))
+            return false;
+        return true;
     }
 }

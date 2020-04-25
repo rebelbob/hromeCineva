@@ -16,16 +16,16 @@ import com.mustplay.moviejournal.util.MovieStorage;
 import com.squareup.picasso.Picasso;
 
 public class MoviePageFragment extends Fragment {
-    private int curMoviePos;
     private View root;
     private ImageButton addMovieButton;
     private Movie.Status status;
+    private Movie movie;
     private static MoviePageFragment fragment;
 
     MoviePageFragment() {}
 
-    public MoviePageFragment(int curMoviePos, Movie.Status status) {
-        this.curMoviePos = curMoviePos;
+    public MoviePageFragment(Movie movie) {
+        this.movie = movie;
         this.status = status;
         fragment = this;
     }
@@ -51,12 +51,12 @@ public class MoviePageFragment extends Fragment {
         addMovieButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieStorage.addToMark(curMoviePos);
+                MovieStorage.addMovie(movie, Movie.Status.MARK);
             }
         });
 
         //загрузка данных в методе onDataLoad(), а метод вызывается в DownloadMoviePage()
-        new DownloadMoviePage().execute(MovieStorage.getMovie(curMoviePos, status));
+        new DownloadMoviePage().execute(movie);
         return root;
     }
 
@@ -65,8 +65,8 @@ public class MoviePageFragment extends Fragment {
         TextView description = root.findViewById(R.id.description);
         TextView title = root.findViewById(R.id.title);
 
-        Picasso.with(getContext()).load(MovieStorage.getMovie(curMoviePos, status).getPosterUrl()).into(poster);
-        title.setText(MovieStorage.getMovie(curMoviePos, status).getTitle());
-        description.setText(MovieStorage.getMovie(curMoviePos, status).getDescription());
+        Picasso.with(getContext()).load(movie.getPosterUrl()).into(poster);
+        title.setText(movie.getTitle());
+        description.setText(movie.getDescription());
     }
 }

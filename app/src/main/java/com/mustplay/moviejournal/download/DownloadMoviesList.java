@@ -54,7 +54,7 @@ public class DownloadMoviesList extends AsyncTask<Void, Void, Void> {
                         titles.get(i).attr("href"),
                         genre.get(i).text(),
                         country.get(i * 3 + 2).text());
-                MovieStorage.addMovie(movie);
+                MovieStorage.addMovie(movie, Movie.Status.NEW);
             }
         }
         return null;

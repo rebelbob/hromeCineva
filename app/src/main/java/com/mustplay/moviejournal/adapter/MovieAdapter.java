@@ -17,12 +17,15 @@ import com.mustplay.moviejournal.download.DownloadMoviesList;
 import com.mustplay.moviejournal.util.MovieStorage;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    Movie.Status status;
+    private ArrayList<Movie> movies;
 
     public MovieAdapter(Movie.Status status){
-        this.status = status;
+        movies = new ArrayList<>();
+        movies.addAll(MovieStorage.getMovies(status));
     }
 
     @Override
@@ -34,7 +37,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        holder.bind(MovieStorage.getMovies(status).get(position));
+        holder.bind(movies.get(position));
         holder.currentMoviePos = position;
 
         if (position >= getItemCount() - (getItemCount() - 5)){
@@ -46,7 +49,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount(){
-        return MovieStorage.getMovies(status).size();
+        return movies.size();
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder{
@@ -72,7 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 public void onClick(View v) {
                     AppCompatActivity appCompatActivity = (AppCompatActivity) itemView.getContext();
                     FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.container, new MoviePageFragment(currentMoviePos, status));
+                    transaction.replace(R.id.container, new MoviePageFragment(movies.get(currentMoviePos)));
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
