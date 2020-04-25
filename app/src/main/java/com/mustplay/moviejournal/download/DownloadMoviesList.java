@@ -65,8 +65,8 @@ public class DownloadMoviesList extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(result);
 
         pageNumber++;
-        isLoading = false;
         ListManager.refreshList();
+        isLoading = false;
     }
 
     public static boolean isLoading(){

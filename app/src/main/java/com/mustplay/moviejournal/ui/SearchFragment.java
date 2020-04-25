@@ -52,5 +52,6 @@ public class SearchFragment extends Fragment {
         movieAdapter = new MovieAdapter(Movie.Status.NEW);
         ListManager.getInstance(movieAdapter);
         movieRecyclerView.setAdapter(movieAdapter);
+        System.out.println("Search" + movieAdapter.hashCode());
     }
 }

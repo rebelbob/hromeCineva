@@ -47,7 +47,6 @@ public class BookmarksFragment extends Fragment {
         //new GridLayoutManager(getContext(), 2) new LinearLayoutManager(getContext())
         movieRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         movieAdapter = new MovieAdapter(Movie.Status.MARK);
-        ListManager.getInstance(movieAdapter);
         movieRecyclerView.setAdapter(movieAdapter);
     }
 }

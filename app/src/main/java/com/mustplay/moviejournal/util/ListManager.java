@@ -1,5 +1,6 @@
 package com.mustplay.moviejournal.util;
 
+import com.mustplay.moviejournal.Movie;
 import com.mustplay.moviejournal.adapter.MovieAdapter;
 
 public class ListManager {
@@ -19,6 +20,8 @@ public class ListManager {
     }
 
     public static synchronized void refreshList(){
+        adapter.setMovies(Movie.Status.NEW);
         adapter.notifyDataSetChanged();
+        System.out.println("List" + adapter.hashCode());
     }
 }

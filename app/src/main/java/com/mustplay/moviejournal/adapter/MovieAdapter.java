@@ -25,6 +25,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public MovieAdapter(Movie.Status status){
         movies = new ArrayList<>();
+        setMovies(status);
+    }
+
+    public void setMovies(Movie.Status status){
         movies.addAll(MovieStorage.getMovies(status));
     }
 
