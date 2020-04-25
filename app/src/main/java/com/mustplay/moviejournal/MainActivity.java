@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,7 +13,7 @@ import com.mustplay.moviejournal.ui.HistoryFragment;
 import com.mustplay.moviejournal.ui.SearchFragment;
 import com.mustplay.moviejournal.ui.BookmarksFragment;
 import com.mustplay.moviejournal.ui.WatchFragment;
-import com.mustplay.moviejournal.util.DownloadMovieTask;
+import com.mustplay.moviejournal.util.MovieStorage;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
+        init();
         openFragment(SearchFragment.newInstance());
     }
 
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                             openFragment(WatchFragment.newInstance("", ""));
                             return true;
                         case R.id.navigation_bookmarks:
-                            openFragment(BookmarksFragment.newInstance("", ""));
+                            openFragment(BookmarksFragment.newInstance());
                             return true;
                         case R.id.navigation_history:
                             openFragment(HistoryFragment.newInstance("", ""));
@@ -58,4 +57,8 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    private void init(){
+        MovieStorage.getInstance();
+    }
 }

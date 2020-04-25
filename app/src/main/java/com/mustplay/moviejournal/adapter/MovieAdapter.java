@@ -13,15 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mustplay.moviejournal.Movie;
 import com.mustplay.moviejournal.R;
 import com.mustplay.moviejournal.ui.MoviePageFragment;
-import com.mustplay.moviejournal.util.DownloadMovieTask;
+import com.mustplay.moviejournal.download.DownloadMoviesList;
 import com.mustplay.moviejournal.util.MovieStorage;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+
+    Movie.Status status;
+
+    public MovieAdapter(Movie.Status status){
+        this.status = status;
+    }
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,42 +34,46 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-        holder.bind(MovieStorage.getMovies().get(position));
-        holder.currentMovie = MovieStorage.getMovies().get(position);
+        holder.bind(MovieStorage.getMovies(status).get(position));
+        holder.currentMoviePos = position;
 
         if (position >= getItemCount() - (getItemCount() - 5)){
-            if (!DownloadMovieTask.isLoading()) {
-                new DownloadMovieTask().execute();
+            if (!DownloadMoviesList.isLoading()) {
+                new DownloadMoviesList().execute();
             }
         }
     }
 
     @Override
     public int getItemCount(){
-        return MovieStorage.getMovies().size();
+        return MovieStorage.getMovies(status).size();
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder{
-        public Movie currentMovie;
-        public View view;
+        int currentMoviePos;
+        View view;
 
         private ImageView poster;
         private TextView title;
         private TextView description;
         private TextView score;
+        private TextView genre;
+        private TextView country;
 
         public MovieViewHolder(final View itemView) {
             super(itemView);
             poster = itemView.findViewById(R.id.poster);
             title = itemView.findViewById(R.id.title);
             score = itemView.findViewById(R.id.score);
+            genre = itemView.findViewById(R.id.genre);
+            country = itemView.findViewById(R.id.country);
             view = itemView;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AppCompatActivity appCompatActivity = (AppCompatActivity) itemView.getContext();
                     FragmentTransaction transaction = appCompatActivity.getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.container, new MoviePageFragment(currentMovie));
+                    transaction.replace(R.id.container, new MoviePageFragment(currentMoviePos));
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
@@ -78,6 +84,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             Picasso.with(view.getContext()).load(movie.getPosterUrl()).into(poster);
             title.setText(movie.getTitle());
             score.setText(movie.getScore());
+            country.setText(movie.getCountry());
+            genre.setText(movie.getGenre());
         }
     }
 }

@@ -1,8 +1,9 @@
-package com.mustplay.moviejournal.util;
+package com.mustplay.moviejournal.download;
 
 import android.os.AsyncTask;
 
-import com.mustplay.moviejournal.Movie;
+import com.mustplay.moviejournal.ui.MoviePageFragment;
+import com.mustplay.moviejournal.util.MovieStorage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,23 +11,23 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class DownloadMovieTask extends AsyncTask<Void, Void, Void> {
+public class DownloadMoviePage extends AsyncTask<Integer, Void, Void> {
 
-    private static int pageNumber = 1;
     private static boolean isLoading = false;
 
     @Override
-    synchronized protected Void doInBackground(Void... params) {
+    synchronized protected Void doInBackground(Integer... params) {
+
+        int curMoviePos = params[0];
 
         isLoading = true;//не позволяет создать больше одного потока за раз
 
         Document doc = null;
-        Elements titles;
-        Elements score;
         Elements images;
+        Elements description;
 
         try {
-            doc = Jsoup.connect("https://www.megacritic.ru/novye/filmy/2017-2019?page=" + pageNumber)
+            doc = Jsoup.connect("https://www.megacritic.ru" + MovieStorage.getMovie(curMoviePos).getMoviePageUrl())
                     .userAgent("Chrome/4.0.249.0 Safari/532.5")
                     .referrer("http://www.google.com")
                     .get();
@@ -35,14 +36,11 @@ public class DownloadMovieTask extends AsyncTask<Void, Void, Void> {
         }
 
         if (doc != null) {
-            titles = doc.select("div.jrContentTitle").select("a");
-            score = doc.select("span.jrRatingValue").select("b");
-            images = doc.select("div.jrListingThumbnail").select("img");
+            images = doc.select("div.jrListingMainImage").select("a");
+            description = doc.select("[itemprop=description]").select("p");
 
-            for (int i = 0; i < titles.size(); i++) {
-                Movie movie = new Movie(titles.get(i).text(), images.get(i).absUrl("src"), score.get(i).text());
-                MovieStorage.addMovie(movie);
-            }
+            MovieStorage.getMovie(curMoviePos).setPosterUrl(images.get(0).attr("href"));
+            MovieStorage.getMovie(curMoviePos).setDescription(description.get(1).text());
         }
         return null;
     }
@@ -51,9 +49,8 @@ public class DownloadMovieTask extends AsyncTask<Void, Void, Void> {
     synchronized protected void onPostExecute(Void result) {
         super.onPostExecute(result);
 
-        pageNumber++;
         isLoading = false;
-        ListManager.refreshList();
+        MoviePageFragment.getInstance().onDataLoad();
     }
 
     public static boolean isLoading(){

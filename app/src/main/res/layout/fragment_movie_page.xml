@@ -6,24 +6,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.MoviePageFragment">
 
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        tools:srcCompat="@tools:sample/avatars"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"/>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/poster"
+
+            <View
+                android:id="@+id/spacer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                tools:srcCompat="@tools:sample/avatars"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"/>
+                android:layout_height="500dp" />
+
+            <RelativeLayout
+            android:id="@+id/layoutOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_angles"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/spacer">
+
+            <ImageView
+                android:id="@+id/line"
+                android:layout_width="60dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/border_line"/>
 
             <TextView
                 android:id="@+id/title"
@@ -31,42 +53,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:text="Film title"
+                android:layout_below="@+id/line"
                 android:textSize="26sp"
-                android:layout_below="@+id/poster"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:gravity="center"/>
 
-            <RelativeLayout
-                android:id="@+id/layout"
+
+            <TextView
+                android:id="@+id/descriptionHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/title">
-
-                <ImageButton
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/rounded"
-                    android:layout_marginLeft="130dp"/>
-
-                <ImageButton
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/rounded"
-                    android:layout_marginRight="130dp"/>
-            </RelativeLayout>
+                android:text="Описание"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:textSize="22sp"
+                android:layout_below="@+id/title"/>
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="dfkdfgjdfngjdnfjkgndjkfgjdkfg\ndfgdfgdfgdfgdfgdfg\ndfgdfgdfg\ndfgdfgdfgdfg"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Description"
                 android:textSize="20sp"
-                android:layout_below="@+id/layout"
-                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/descriptionHead"
                 android:layout_marginBottom="80dp"/>
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/add_movie"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:background="@drawable/ic_add"
+        android:layout_gravity="bottom | right"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="80dp" />
 
 </FrameLayout>

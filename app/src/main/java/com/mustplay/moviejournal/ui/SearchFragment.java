@@ -7,18 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mustplay.moviejournal.Movie;
 import com.mustplay.moviejournal.R;
 import com.mustplay.moviejournal.adapter.MovieAdapter;
-import com.mustplay.moviejournal.util.DownloadMovieTask;
+import com.mustplay.moviejournal.download.DownloadMoviesList;
 import com.mustplay.moviejournal.util.ListManager;
-import com.mustplay.moviejournal.util.MovieStorage;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 public class SearchFragment extends Fragment {
 
@@ -44,8 +39,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
-        MovieStorage.getInstance();
-        new DownloadMovieTask().execute();
+
+        new DownloadMoviesList().execute();
         initRecyclerView(root);
         return root;
     }
@@ -54,7 +49,7 @@ public class SearchFragment extends Fragment {
         movieRecyclerView = root.findViewById(R.id.movie_recycler_view);
         //new GridLayoutManager(getContext(), 2) new LinearLayoutManager(getContext())
         movieRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        movieAdapter = new MovieAdapter();
+        movieAdapter = new MovieAdapter(Movie.Status.NEW);
         ListManager.getInstance(movieAdapter);
         movieRecyclerView.setAdapter(movieAdapter);
     }
