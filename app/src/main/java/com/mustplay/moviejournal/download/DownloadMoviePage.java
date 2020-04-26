@@ -25,6 +25,7 @@ public class DownloadMoviePage extends AsyncTask<Movie, Void, Void> {
         Document doc = null;
         Elements images;
         Elements description;
+        Elements releaseYear;
 
         try {
             doc = Jsoup.connect("https://www.megacritic.ru" + curMoviePos.getMoviePageUrl())
@@ -38,9 +39,11 @@ public class DownloadMoviePage extends AsyncTask<Movie, Void, Void> {
         if (doc != null) {
             images = doc.select("div.jrListingMainImage").select("a");
             description = doc.select("[itemprop=description]").select("p");
+            releaseYear = doc.select("div.jrFieldRow").select("div.jrFieldValue").select("a");
 
             curMoviePos.setPosterUrl(images.get(0).attr("href"));
             curMoviePos.setDescription(description.get(1).text());
+            curMoviePos.setReleaseYear(releaseYear.get(0).text());
         }
         return null;
     }

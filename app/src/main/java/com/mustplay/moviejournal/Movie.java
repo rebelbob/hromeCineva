@@ -17,6 +17,7 @@ public class Movie {
     private String genre;
     private String country;
     private String moviePageUrl;
+    private String releaseYear;
 
 
     public Movie(Status status, String title, String posterUrl, String score, String moviePageUrl, String genre, String country){
@@ -87,6 +88,14 @@ public class Movie {
 
     public Status getStatus() {
         return status;
+    }
+
+    public String getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(String releaseYear) {
+        this.releaseYear = releaseYear;
     }
 
     @Override

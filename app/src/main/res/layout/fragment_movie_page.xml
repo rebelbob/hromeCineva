@@ -43,57 +43,74 @@
                     android:id="@+id/line"
                     android:layout_width="60dp"
                     android:layout_height="5dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/border_line"/>
 
-                <TextView
-                    android:id="@+id/title"
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="Film title"
                     android:layout_below="@+id/line"
-                    android:textSize="26sp"
                     android:layout_centerHorizontal="true"
-                    android:gravity="center"/>
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="Loading.."
+                        android:textAlignment="center"
+                        android:textStyle="bold"
+                        android:textSize="26sp"
+                        android:gravity="center_horizontal" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
                 <TextView
                     android:id="@+id/genre"
-                    android:layout_below="@+id/title"
+                    android:layout_below="@+id/shimmer_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Genre"
                     android:layout_marginLeft="20dp"
                     android:textSize="26sp"
-                    />
+                    android:layout_marginStart="20dp" />
 
                 <TextView
                     android:id="@+id/country"
                     android:layout_below="@+id/genre"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Country"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:textSize="26sp"
-                    />
+                    android:layout_marginStart="20dp" />
+
+                <TextView
+                    android:id="@+id/release_year"
+                    android:layout_below="@+id/country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="26sp"
+                    android:layout_marginStart="20dp" />
 
 
                 <TextView
                     android:id="@+id/descriptionHead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Описание"
                     android:textStyle="bold"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="20dp"
                     android:textSize="22sp"
-                    android:layout_below="@+id/country"/>
+                    android:layout_below="@+id/release_year"
+                    android:layout_marginStart="20dp" />
 
                 <TextView
                     android:id="@+id/description"
@@ -101,7 +118,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="Description"
                     android:textSize="20sp"
                     android:layout_below="@+id/descriptionHead"
                     android:layout_marginBottom="80dp"

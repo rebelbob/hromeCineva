@@ -22,6 +22,5 @@ public class ListManager {
     public static synchronized void refreshList(){
         adapter.setMovies(Movie.Status.NEW);
         adapter.notifyDataSetChanged();
-        System.out.println("List" + adapter.hashCode());
     }
 }

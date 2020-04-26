@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mustplay.moviejournal.Movie;
 import com.mustplay.moviejournal.R;
 import com.mustplay.moviejournal.util.RoundedBackgroundSpan;
@@ -27,6 +28,7 @@ public class MoviePageFragment extends Fragment {
     private ImageButton addMovieButton;
     private Movie movie;
     private static MoviePageFragment fragment;
+    private ShimmerFrameLayout loading;
 
     MoviePageFragment() {}
 
@@ -60,17 +62,25 @@ public class MoviePageFragment extends Fragment {
             }
         });
 
+        loading = root.findViewById(R.id.shimmer_title);
+        loading.startShimmer();
+
         //загрузка данных в методе onDataLoad(), а метод вызывается в DownloadMoviePage()
         new DownloadMoviePage().execute(movie);
         return root;
     }
 
     public void onDataLoad(){
+        loading.stopShimmer();
+        loading.hideShimmer();
+
         ImageView poster = root.findViewById(R.id.poster);
         TextView description = root.findViewById(R.id.description);
         TextView title = root.findViewById(R.id.title);
         TextView genre = root.findViewById(R.id.genre);
         TextView country = root.findViewById(R.id.country);
+        TextView releaseYear = root.findViewById(R.id.release_year);
+        TextView descriptionHead = root.findViewById(R.id.descriptionHead);
 
         System.out.println(movie.getCountry());
 
@@ -80,7 +90,10 @@ public class MoviePageFragment extends Fragment {
         genre.setText(setTags(tags));
         tags = Arrays.asList(movie.getCountry().split(" "));
         country.setText(setTags(tags));
+        tags = Arrays.asList(movie.getReleaseYear());
+        releaseYear.setText(setTags(tags));
         description.setText(movie.getDescription());
+        descriptionHead.setText("Описание");
     }
 
     SpannableStringBuilder setTags(List<String> tags) {
